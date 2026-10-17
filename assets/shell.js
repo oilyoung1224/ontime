@@ -47,17 +47,19 @@
   document.body.appendChild(cover);
   var msg = cover.querySelector('.sh-msg'), retry = cover.querySelector('.sh-retry');
 
-  var frame = null, ready = false, slowT = null;
+  var frame = null, ready = false, slowT = null, goneT = null;
+  function showCover() { clearTimeout(goneT); cover.hidden = false; cover.classList.remove('gone'); }
+  function hideCover() { cover.classList.add('gone'); clearTimeout(goneT); goneT = setTimeout(function () { cover.hidden = true; }, 300); }   // 흐려진 뒤 아예 치운다
   function offline() {
     if (frame) { frame.remove(); frame = null; }
-    cover.classList.remove('gone');
+    showCover();
     msg.textContent = '인터넷 연결을 확인하세요';
     retry.hidden = false;
   }
   function open() {
     if (navigator.onLine === false) { offline(); return; }
     ready = false;
-    cover.classList.remove('gone'); msg.textContent = '불러오는 중'; retry.hidden = true;
+    showCover(); msg.textContent = '불러오는 중'; retry.hidden = true;
     if (frame) frame.remove();
     frame = document.createElement('iframe');
     frame.className = 'sh-frame';
@@ -69,7 +71,7 @@
     clearTimeout(slowT);
     slowT = setTimeout(function () {
       if (ready) return;
-      cover.classList.remove('gone');
+      showCover();
       msg.textContent = '연결이 느려요'; retry.hidden = false;
     }, READY_MS);
   }
@@ -85,7 +87,7 @@
     if (!d || typeof d !== 'object' || !TYPES[d.type]) return;
     if (d.type === 'ontime:ready') {
       ready = true; clearTimeout(slowT);
-      cover.classList.add('gone');
+      hideCover();
       try { e.source.postMessage({ type: 'ontime:session', token: store('get') }, e.origin); } catch (x) {}
     } else if (d.type === 'ontime:save') {
       if (typeof d.token === 'string' && d.token && d.token.length < 4000) store('set', d.token);

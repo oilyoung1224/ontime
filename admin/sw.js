@@ -1,5 +1,5 @@
 /* ONTIME관리 서비스 워커 — 껍데기 파일(이 폴더 + /assets/)만 캐시한다. GAS(구글) 응답은 가로채지도 캐시하지도 않는다(항상 최신 · 개인정보) */
-var VERSION = 'ontime-admin-v1';
+var VERSION = 'ontime-admin-v2';
 var FILES = ['./', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png', './icons/apple-touch-icon.png',
              '../assets/config.js', '../assets/shell.js', '../assets/shell.css', '../assets/install.js'];
 var OFFLINE = '<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">' +

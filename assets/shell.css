@@ -21,3 +21,5 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'N
 .sh-band .go { background: #F5B800; color: #3A2C00; }
 .sh-band .x { background: transparent; color: #AEB8CC; padding: 9px 8px; }
 .sh-band svg { flex: none; vertical-align: -4px; }
+
+.sh-cover[hidden], .sh-retry[hidden] { display: none; }
