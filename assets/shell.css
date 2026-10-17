@@ -1,0 +1,23 @@
+/* ONTIME 껍데기 공통 스타일 — 화면 전체 iframe · 로딩 가림막 · 설치 안내 띠 */
+html, body { margin: 0; height: 100%; overflow: hidden; background: var(--app-bg, #0E1626); }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif; -webkit-text-size-adjust: 100%; }
+.sh-frame { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; border: 0; display: block; background: var(--app-bg, #0E1626); }
+
+.sh-cover { position: fixed; inset: 0; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+            background: var(--app-color, #17223A); color: #fff; transition: opacity .25s; padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom); }
+.sh-cover.gone { opacity: 0; pointer-events: none; }
+.sh-msg { font-size: 17px; font-weight: 700; letter-spacing: .02em; }
+.sh-retry { font: inherit; font-size: 16px; font-weight: 800; padding: 12px 26px; border-radius: 12px; border: 0; background: #fff; color: #1A2233; cursor: pointer; }
+
+/* [K-4] 설치 안내 띠 — 아래 띠 64px 이하, 위 띠(앱 안 브라우저)도 닫을 수 있다 */
+.sh-band { position: fixed; left: 8px; right: 8px; z-index: 20; display: flex; align-items: center; gap: 10px; max-height: 64px; box-sizing: border-box;
+           padding: 8px 10px 8px 14px; border-radius: 14px; background: rgba(14, 22, 38, .96); color: #fff; font-size: 14px; line-height: 1.35;
+           box-shadow: 0 6px 24px rgba(0, 0, 0, .35); }
+.sh-band.bottom { bottom: calc(8px + env(safe-area-inset-bottom)); }
+.sh-band.top { top: calc(8px + env(safe-area-inset-top)); }
+.sh-band .t { flex: 1; min-width: 0; overflow: hidden; }
+.sh-band .t b { color: #FFD45C; }
+.sh-band button, .sh-band a.go { font: inherit; font-size: 14px; font-weight: 800; border: 0; border-radius: 10px; padding: 9px 12px; cursor: pointer; white-space: nowrap; text-decoration: none; }
+.sh-band .go { background: #F5B800; color: #3A2C00; }
+.sh-band .x { background: transparent; color: #AEB8CC; padding: 9px 8px; }
+.sh-band svg { flex: none; vertical-align: -4px; }
