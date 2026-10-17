@@ -49,7 +49,7 @@
 
   var frame = null, ready = false, slowT = null, goneT = null;
   function showCover() { clearTimeout(goneT); cover.hidden = false; cover.classList.remove('gone'); }
-  function hideCover() { cover.classList.add('gone'); clearTimeout(goneT); goneT = setTimeout(function () { cover.hidden = true; }, 300); }   // 흐려진 뒤 아예 치운다
+  function hideCover() { clearTimeout(goneT); cover.classList.add('gone'); cover.hidden = true; }   // 바로 치운다(타이머 · 전환 효과에 기대지 않음)
   function offline() {
     if (frame) { frame.remove(); frame = null; }
     showCover();
