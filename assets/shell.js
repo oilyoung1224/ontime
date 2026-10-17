@@ -48,8 +48,8 @@
   var msg = cover.querySelector('.sh-msg'), retry = cover.querySelector('.sh-retry');
 
   var frame = null, ready = false, slowT = null, goneT = null;
-  function showCover() { clearTimeout(goneT); cover.hidden = false; cover.classList.remove('gone'); }
-  function hideCover() { clearTimeout(goneT); cover.classList.add('gone'); cover.hidden = true; }   // 바로 치운다(타이머 · 전환 효과에 기대지 않음)
+  function showCover() { clearTimeout(goneT); cover.hidden = false; cover.style.display = ''; cover.classList.remove('gone'); }
+  function hideCover() { clearTimeout(goneT); cover.classList.add('gone'); cover.hidden = true; cover.style.display = 'none'; }   // 바로 치운다(타이머 · 전환 효과에 기대지 않음)
   function offline() {
     if (frame) { frame.remove(); frame = null; }
     showCover();
