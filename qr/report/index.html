@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1F8F5F">
+<title>ONTIME 학부모 리포트 설치</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+  /* ── 토큰 ── 학부모 리포트 앱 배색 (초록) */
+  :root {
+    --bg:        #FFFFFF;
+    --bg2:       #F5F7F6;
+    --fg:        #0D1F17;
+    --fg-mid:    #3D5A4A;
+    --fg-dim:    #7A9B8A;
+    --accent:    #1F8F5F;
+    --accent-lt: #E6F5EE;
+    --accent-dk: #166B47;
+    --card-bg:   #FFFFFF;
+    --card-bd:   #D4E8DC;
+    --step-bg:   #E6F5EE;
+    --step-bd:   #1F8F5F;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:        #0A1A12;
+      --bg2:       #102018;
+      --fg:        #E8F5EE;
+      --fg-mid:    #8ABFA0;
+      --fg-dim:    #4A7A5E;
+      --accent:    #2DB87A;
+      --accent-lt: #0F2E1E;
+      --accent-dk: #5DD4A0;
+      --card-bg:   #102018;
+      --card-bd:   #1C4030;
+      --step-bg:   #0F2E1E;
+      --step-bd:   #2DB87A;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:        #0A1A12;
+    --bg2:       #102018;
+    --fg:        #E8F5EE;
+    --fg-mid:    #8ABFA0;
+    --fg-dim:    #4A7A5E;
+    --accent:    #2DB87A;
+    --accent-lt: #0F2E1E;
+    --accent-dk: #5DD4A0;
+    --card-bg:   #102018;
+    --card-bd:   #1C4030;
+    --step-bg:   #0F2E1E;
+    --step-bd:   #2DB87A;
+    color-scheme: dark;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    padding-top: calc(40px + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    min-height: 100%;
+  }
+
+  .page {
+    max-width: 460px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* 헤더 */
+  .header { text-align: center; }
+  .brand {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--fg-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .app-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--accent);
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 0.03em;
+    padding: 10px 20px 10px 16px;
+    border-radius: 12px;
+  }
+  .headline {
+    margin-top: 14px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--fg);
+    text-wrap: balance;
+    line-height: 1.4;
+  }
+  .subline {
+    margin-top: 6px;
+    font-size: 14px;
+    color: var(--fg-mid);
+    line-height: 1.6;
+  }
+
+  /* QR 카드 */
+  .qr-card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--card-bd);
+    border-radius: 20px;
+    padding: 28px 20px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+  .qr-wrap {
+    background: #FFFFFF;
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    display: inline-block;
+  }
+
+  .url-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg2);
+    border: 1px solid var(--card-bd);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .url-text {
+    flex: 1;
+    font-size: 12px;
+    color: var(--fg-mid);
+    word-break: break-all;
+    min-width: 0;
+  }
+  .copy-btn {
+    flex-shrink: 0;
+    background: var(--accent);
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 700;
+    border: none;
+    border-radius: 7px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-family: inherit;
+  }
+  .copy-btn:hover { background: var(--accent-dk); }
+  .copy-btn:active { transform: scale(0.97); }
+
+  /* 설치 방법 */
+  .steps-section { display: flex; flex-direction: column; gap: 12px; }
+  .steps-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--fg-dim);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .os-card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--card-bd);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .os-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--card-bd);
+  }
+  .os-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .os-icon.android { background: var(--accent-lt); }
+  .os-icon.iphone  { background: var(--bg2); }
+
+  .os-name { font-size: 15px; font-weight: 700; color: var(--fg); }
+  .os-sub  { font-size: 12px; color: var(--fg-dim); margin-top: 1px; }
+
+  .steps-list {
+    list-style: none;
+    padding: 12px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .step-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .step-num {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    background: var(--accent);
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 900;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+  .step-text {
+    font-size: 14px;
+    color: var(--fg-mid);
+    line-height: 1.6;
+    min-width: 0;
+  }
+  .step-text strong { color: var(--fg); font-weight: 700; }
+  .step-text .em {
+    display: inline-block;
+    background: var(--step-bg);
+    border: 1px solid var(--step-bd);
+    border-radius: 5px;
+    padding: 0 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  /* 알림 박스 */
+  .notice {
+    background: var(--accent-lt);
+    border: 1.5px solid var(--step-bd);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--fg-mid);
+    line-height: 1.7;
+  }
+  .notice strong { color: var(--accent); font-weight: 700; }
+
+  /* 푸터 */
+  .footer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--fg-dim);
+    line-height: 1.7;
+    padding-bottom: 8px;
+  }
+  .footer strong { color: var(--fg-mid); }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- 헤더 -->
+  <header class="header">
+    <p class="brand">공부의 신 수학</p>
+    <div class="app-badge">
+      <!-- 리포트 아이콘 -->
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="3" width="18" height="20" rx="3" fill="white" opacity="0.2"/>
+        <rect x="4" y="3" width="18" height="20" rx="3" stroke="white" stroke-width="1.8" fill="none"/>
+        <line x1="8" y1="9" x2="18" y2="9" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+        <line x1="8" y1="13" x2="18" y2="13" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+        <line x1="8" y1="17" x2="14" y2="17" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      ONTIME 리포트
+    </div>
+    <h1 class="headline">학부모 앱 설치하기</h1>
+    <p class="subline">숙제 결과·출결 리포트를 스마트폰에서 확인하세요</p>
+  </header>
+
+  <!-- QR 코드 -->
+  <section class="qr-card">
+    <div class="qr-wrap">
+      <div id="qr-canvas"></div>
+    </div>
+    <div class="url-row">
+      <span class="url-text" id="app-url">oilyoung1224.github.io/ontime/report/</span>
+      <button class="copy-btn" id="copy-btn" onclick="copyUrl()">복사</button>
+    </div>
+  </section>
+
+  <!-- 알림 안내 -->
+  <div class="notice">
+    📩 <strong>문자로 링크를 받으셨나요?</strong><br>
+    카카오톡·문자 앱 안에서 열면 설치가 안 됩니다.<br>
+    오른쪽 위 <strong>⋮</strong> 또는 <strong>…</strong> 메뉴에서 <strong>크롬(또는 사파리)으로 열기</strong>를 선택해 주세요.
+  </div>
+
+  <!-- 설치 방법 -->
+  <section class="steps-section">
+    <p class="steps-title">설치 방법</p>
+
+    <!-- Android -->
+    <div class="os-card">
+      <div class="os-header">
+        <div class="os-icon android">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M3.5 7.5C3.5 6.12 4.62 5 6 5H14C15.38 5 16.5 6.12 16.5 7.5V13.5C16.5 14.88 15.38 16 14 16H6C4.62 16 3.5 14.88 3.5 13.5V7.5Z" fill="#34A853"/>
+            <circle cx="7.5" cy="10.5" r="1" fill="white"/>
+            <circle cx="12.5" cy="10.5" r="1" fill="white"/>
+            <path d="M7 5L5.5 3M13 5L14.5 3" stroke="#34A853" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="os-name">안드로이드</div>
+          <div class="os-sub">삼성·LG·기타 안드로이드 폰</div>
+        </div>
+      </div>
+      <ol class="steps-list">
+        <li class="step-item">
+          <span class="step-num">1</span>
+          <span class="step-text"><strong>크롬</strong>으로 QR 코드를 스캔하거나 주소를 직접 입력하세요</span>
+        </li>
+        <li class="step-item">
+          <span class="step-num">2</span>
+          <span class="step-text">화면 아래에 뜨는 <span class="em">앱 설치</span> 배너를 누르세요</span>
+        </li>
+        <li class="step-item">
+          <span class="step-num">3</span>
+          <span class="step-text">배너가 안 보이면 크롬 오른쪽 위 <strong>⋮ 메뉴 → 홈 화면에 추가</strong></span>
+        </li>
+        <li class="step-item">
+          <span class="step-num">4</span>
+          <span class="step-text">홈 화면에 <strong>ONTIME리포트</strong> 아이콘이 생기면 완료!</span>
+        </li>
+      </ol>
+    </div>
+
+    <!-- iPhone -->
+    <div class="os-card">
+      <div class="os-header">
+        <div class="os-icon iphone">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect x="5" y="2" width="10" height="16" rx="2.5" stroke="#555" stroke-width="1.5" fill="none"/>
+            <circle cx="10" cy="15.5" r="1" fill="#555"/>
+            <path d="M8 3.5H12" stroke="#555" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="os-name">아이폰 (iPhone)</div>
+          <div class="os-sub">iOS 16 이상</div>
+        </div>
+      </div>
+      <ol class="steps-list">
+        <li class="step-item">
+          <span class="step-num">1</span>
+          <span class="step-text">카메라 앱으로 QR 코드를 스캔하면 <strong>사파리</strong>로 열려요</span>
+        </li>
+        <li class="step-item">
+          <span class="step-num">2</span>
+          <span class="step-text">사파리 아래 가운데 <span class="em">□↑ 공유 버튼</span>을 누르세요</span>
+        </li>
+        <li class="step-item">
+          <span class="step-num">3</span>
+          <span class="step-text">메뉴에서 <span class="em">홈 화면에 추가</span>를 찾아 누르세요</span>
+        </li>
+        <li class="step-item">
+          <span class="step-num">4</span>
+          <span class="step-text">오른쪽 위 <strong>[추가]</strong>를 누르면 아이콘이 생겨요</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 푸터 -->
+  <footer class="footer">
+    문의 · 공부의 신 수학 &nbsp;010-3218-6022
+  </footer>
+
+</div>
+
+<script src="../../assets/config.js"></script>
+<script>
+  // 주소는 config.js의 BASE로 만든다(도메인을 붙이면 BASE만 바뀐다). 못 읽으면 고정 주소 — QR이 빈칸이 되지 않게
+  const APP_URL = (window.ONTIME && window.ONTIME.BASE ? window.ONTIME.BASE : 'https://oilyoung1224.github.io/ontime') + '/report/';
+  document.getElementById('app-url').textContent = APP_URL.replace(/^https:\/\//, '');
+
+  // QR 코드 생성 (초록 계열) — 상담 때 태블릿·PC 화면(폭 600px 이상)은 멀리서 찍으므로 300px
+  const QR_SIZE = window.matchMedia && window.matchMedia('(min-width: 600px)').matches ? 300 : 220;
+  new QRCode(document.getElementById('qr-canvas'), {
+    text: APP_URL,
+    width: QR_SIZE,
+    height: QR_SIZE,
+    colorDark: '#0D1F17',
+    colorLight: '#FFFFFF',
+    correctLevel: QRCode.CorrectLevel.M
+  });
+
+  function copyUrl() {
+    const btn = document.getElementById('copy-btn');
+    navigator.clipboard.writeText(APP_URL).then(() => {
+      btn.textContent = '완료!';
+      setTimeout(() => { btn.textContent = '복사'; }, 1800);
+    }).catch(() => {
+      const el = document.getElementById('app-url');
+      const range = document.createRange();
+      range.selectNode(el);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      btn.textContent = '선택됨';
+      setTimeout(() => {
+        window.getSelection().removeAllRanges();
+        btn.textContent = '복사';
+      }, 1800);
+    });
+  }
+</script>
+
+</body>
+</html>
