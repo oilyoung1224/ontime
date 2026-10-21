@@ -35,6 +35,7 @@
       q.push(kv);
     });
     if (app === 'student' && standalone()) q.push('app=1');          // 설치된 아이콘으로 열었다 — 학생 앱 "로그인 유지" 기본 켜짐
+    if (app === 'report' && standalone() && !/(^|&)src=/.test(location.search.replace(/^\?/, ''))) q.push('src=icon');   // [v45 .b] 학부모 열람 경로 = 아이콘(문자 링크는 src=sms)
     return C.GAS + (q.length ? '?' + q.join('&') : '') + location.hash;
   }
 
