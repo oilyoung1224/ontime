@@ -8,64 +8,71 @@
 <title>공부의 신 수학 · 반 진도</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
 <style>
-/* 벽 QR용 반 진도: 반 버튼 5개 → 그 반 중단원 목록, 이번 주(남색)·3주 뒤(주황)·사이(옅게). 밝은 회색 단일 테마 */
-:root{--bg:#eceef1;--card:#fff;--ink:#1c2333;--muted:#6b7282;--unit:#f4f5f7;--now:#1f3a64;--now-ink:#fff;--later:#e8a33a;--later-ink:#3b2500;--between:#dfe5ef;
+/* 벽 QR용 반 진도: 반 버튼 → 그 반 중단원 목록. 지난 수업(남색) · 다음 주 예상(하늘) · 2주 후 예상(주황). 밝은 회색 단일 테마 */
+:root{--bg:#eceef1;--card:#fff;--ink:#1c2333;--muted:#5f6676;--faint:#8a90a0;--unit:#f4f5f7;
+  --recent:#1f3a64;--recent-ink:#fff;--next:#cfe0f7;--next-ink:#14305e;--after:#e8a33a;--after-ink:#3b2500;
   --sans:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;color-scheme:light}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.45;word-break:keep-all}
 .wrap{max-width:520px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-top:calc(18px + env(safe-area-inset-top,0px));padding-bottom:calc(40px + env(safe-area-inset-bottom,0px));display:grid;gap:14px}
-.brand{font-size:13px;font-weight:700;color:var(--now)}
+.brand{font-size:13px;font-weight:700;color:var(--recent)}
 h1{margin:0;font-size:20px}
 .sub{font-size:13px;color:var(--muted)}
-.legend{display:flex;gap:14px;font-size:13px;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;color:var(--muted)}
 .legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:5px}
-.legend i.n{background:var(--now)}.legend i.l{background:var(--later)}
 .picker{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
-.picker button{appearance:none;border:0;background:var(--card);color:var(--ink);border-radius:9px;padding:10px 0;font:700 14px var(--sans);cursor:pointer}
-.picker button[aria-pressed="true"]{background:var(--now);color:var(--now-ink)}
-.picker button:focus-visible{outline:3px solid var(--now);outline-offset:2px}
+.picker button{appearance:none;border:0;background:var(--card);color:var(--ink);border-radius:9px;padding:10px 0;min-height:44px;font:700 14px var(--sans);cursor:pointer}
+.picker button[aria-pressed="true"]{background:var(--recent);color:var(--recent-ink)}
+.picker button:focus-visible{outline:3px solid var(--recent);outline-offset:2px}
 .cls{background:var(--card);border-radius:14px;padding:14px;display:grid;gap:10px}
 .cls .name{font-size:17px;font-weight:700}
 .cls .name span{font-size:13px;font-weight:400;color:var(--muted);margin-left:8px}
+.sem{font-size:13px;font-weight:700;color:var(--muted);margin-top:4px}
 .mids{list-style:none;margin:0;padding:0;display:grid;gap:4px}
-.mids li{background:var(--unit);border-radius:8px;padding:8px 12px;font-size:15px;color:var(--muted);display:flex;justify-content:space-between;gap:8px;align-items:baseline}
-.mids li .tag{font-size:12px;font-weight:700;white-space:nowrap}
-.mids li.btw{background:var(--between);color:var(--ink)}
-.mids li.now{background:var(--now);color:var(--now-ink);font-weight:700}
-.mids li.later{background:var(--later);color:var(--later-ink);font-weight:700}
-.foot{font-size:13px;color:var(--muted);margin:0}
+.mids li{background:var(--unit);border-radius:8px;padding:8px 12px;font-size:15px;color:var(--faint);display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.mids li .t{font-size:12px;font-weight:700;white-space:nowrap}
+.mids li.recent{background:var(--recent);color:var(--recent-ink);font-weight:700}
+.mids li.next{background:var(--next);color:var(--next-ink);font-weight:700}
+.mids li.after{background:var(--after);color:var(--after-ink);font-weight:700}
+.mids li.ahead{color:var(--ink)}
+.foot{font-size:12px;color:var(--muted);margin:0}
 .empty{background:var(--card);border-radius:14px;padding:18px;color:var(--muted);text-align:center;margin:0}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div><div class="brand">공부의 신 수학</div><h1>반 진도</h1><div class="sub" id="asof">불러오는 중…</div></div>
-  <div class="legend"><span><i class="n"></i>이번 주</span><span><i class="l"></i>3주 뒤</span></div>
+  <div class="legend" id="legend" hidden></div>
   <nav class="picker" id="picker" aria-label="반 선택"></nav>
   <div id="list"></div>
 </div>
 <script>
 var GAS='https://script.google.com/macros/s/AKfycbwhqAmvfEP6mCQ5hHHtxRc05xkN5Ei2R_PNNtNneiQ1GVlSysKIWZH8rb1cLy3wxOM/exec';
-var DATA=null,CLS=null;
+var DATA=null,CLS=null,TAG={recent:'지난 수업',next:'다음 주 예상',after:'2주 후 예상'};
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function render(){
   document.getElementById('picker').innerHTML=DATA.classes.map(function(c){return '<button type="button" aria-pressed="'+(c.name===CLS)+'" data-c="'+esc(c.name)+'">'+esc(c.name)+'</button>'}).join('');
   var c=DATA.classes.filter(function(x){return x.name===CLS})[0],L=document.getElementById('list');
-  if(!c||!c.units.length){L.innerHTML='<p class="empty">'+esc(CLS)+' 진도가 아직 입력되지 않았습니다.</p>';return}
-  var keys=c.units.map(function(u){return u.key}),ni=keys.indexOf(c.now),li=keys.indexOf(c.later);
-  var h='<div class="cls"><div class="name">'+esc(c.name)+'<span>'+esc(c.sem)+' 진도</span></div><ol class="mids">'+
-    c.units.map(function(u,i){var k=i===ni?'now':i===li?'later':(ni>=0&&li>ni&&i>ni&&i<li)?'btw':'';
-      var t=i===ni?'<span class="tag">이번 주</span>':i===li?'<span class="tag">3주 뒤</span>':'';
-      return '<li class="'+k+'">'+esc(u.name)+t+'</li>'}).join('')+'</ol>';
-  if(c.laterSem&&c.laterSem!==c.sem) h+='<p class="foot">3주 뒤에는 '+esc(c.laterSem)+' 진도입니다.</p>';
-  else if(c.now&&c.later===c.now) h+='<p class="foot">3주 뒤에도 같은 단원 예정입니다.</p>';
-  L.innerHTML=h+'</div>';
+  if(!c||!c.groups||!c.groups.length){L.innerHTML='<p class="empty">'+esc(CLS)+' 진도가 아직 입력되지 않았습니다.</p>';return}
+  var h='<div class="cls"><div class="name">'+esc(c.name)+'<span>'+esc(c.groups[0].sem)+' 진도</span></div>';
+  c.groups.forEach(function(g,gi){
+    if(gi>0)h+='<div class="sem">이어서 '+esc(g.sem)+'</div>';
+    h+='<ol class="mids">'+g.units.map(function(u){
+      var t=TAG[u.state]?'<span class="t">'+TAG[u.state]+'</span>':'';
+      return '<li class="'+esc(u.state||'')+'">'+esc(u.name)+t+'</li>'}).join('')+'</ol>';
+  });
+  h+='<p class="foot">'+esc(c.recordLabel)+' 기록 기준 · 예상은 주당 중단원 '+esc(DATA.pace)+'개로 계산</p></div>';
+  L.innerHTML=h;
 }
 document.getElementById('picker').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;CLS=b.getAttribute('data-c');try{localStorage.setItem('progCls',CLS)}catch(e){}render()});
 fetch(GAS+'?api=progress').then(function(r){return r.json()}).then(function(d){
   if(!d||!d.ok)throw 0;
   DATA=d;document.getElementById('asof').textContent=d.todayLabel+' 기준';
+  var lg=document.getElementById('legend');
+  lg.innerHTML='<span><i style="background:var(--recent)"></i>지난 수업</span><span><i style="background:var(--next)"></i>다음 주 '+esc(d.nextLabel)+'</span><span><i style="background:var(--after)"></i>2주 후 '+esc(d.afterLabel)+'</span>';
+  lg.hidden=false;
   if(!d.classes.length){document.getElementById('list').innerHTML='<p class="empty">아직 입력된 반 진도가 없습니다.</p>';return}
   CLS=d.classes[0].name;
   try{var v=localStorage.getItem('progCls');if(d.classes.some(function(c){return c.name===v}))CLS=v}catch(e){}
