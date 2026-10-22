@@ -29,6 +29,8 @@ h1{margin:0;font-size:20px}
 .cls{background:var(--card);border-radius:14px;padding:14px;display:grid;gap:10px}
 .cls .name{font-size:17px;font-weight:700}
 .cls .name span{font-size:13px;font-weight:400;color:var(--muted);margin-left:8px}
+.cls .book{justify-self:start;font-size:14px;background:var(--unit);border-radius:8px;padding:5px 12px}
+.cls .book b{font-weight:700}
 .sem{font-size:13px;font-weight:700;color:var(--muted);margin-top:4px}
 .mids{list-style:none;margin:0;padding:0;display:grid;gap:4px}
 .mids li{background:var(--unit);border-radius:8px;padding:8px 12px;font-size:15px;color:var(--faint);display:flex;justify-content:space-between;gap:8px;align-items:baseline}
@@ -55,8 +57,9 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){retur
 function render(){
   document.getElementById('picker').innerHTML=DATA.classes.map(function(c){return '<button type="button" aria-pressed="'+(c.name===CLS)+'" data-c="'+esc(c.name)+'">'+esc(c.name)+'</button>'}).join('');
   var c=DATA.classes.filter(function(x){return x.name===CLS})[0],L=document.getElementById('list');
-  if(!c||!c.groups||!c.groups.length){L.innerHTML='<p class="empty">'+esc(CLS)+' 진도가 아직 입력되지 않았습니다.</p>';return}
-  var h='<div class="cls"><div class="name">'+esc(c.name)+'<span>'+esc(c.groups[0].sem)+' 진도</span></div>';
+  var book=c&&c.book?'<div class="book">교재 <b>'+esc(c.book)+'</b></div>':'';
+  if(!c||!c.groups||!c.groups.length){L.innerHTML='<p class="empty">'+esc(CLS)+' 진도가 아직 입력되지 않았습니다.'+(c&&c.book?'<br>교재: '+esc(c.book):'')+'</p>';return}
+  var h='<div class="cls"><div class="name">'+esc(c.name)+'<span>'+esc(c.groups[0].sem)+' 진도</span></div>'+book;
   c.groups.forEach(function(g,gi){
     if(gi>0)h+='<div class="sem">이어서 '+esc(g.sem)+'</div>';
     h+='<ol class="mids">'+g.units.map(function(u){
