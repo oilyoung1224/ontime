@@ -4,289 +4,204 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#C8F0E0">
 <link rel="icon" href="../student/icons/icon-192.png">
 <title>공부의 신 수학 학원 안내</title>
 <meta name="description" content="같은 70점이라도 처방은 다릅니다. 우리 아이는 어느 쪽일까요?">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
-/* 신규 상담 전용 안내지: 질문 하나 → 하루·문자 → 상담에서만 알려 드리는 것(잠금) → 상담 3단계 → 상담 예약 버튼 */
+/* 신규 상담 안내지 — 시안 F(민트 & 로즈). 질문 하나 → 수업 구성 → 하루 흐름(예시) → 부모님 문자 → 반 진도 → 상담에서 알려 드림 → 상담 순서 → 신청 버튼 */
 :root{
-  --bg:#F5F6F9; --paper:#FFFFFF; --ink:#16203A; --muted:#5A6580; --line:#DDE2EC;
-  --navy:#0E1626; --accent:#E4931F; --accent-soft:#FDF1DD; --on-accent:#1A1205;
-  --calc:#2F6FD6; --calc-soft:#E3EDFC; --con:#1E8A5A; --con-soft:#E3F4EC; --track:#E9ECF2;
-  --sans:"IBM Plex Sans KR",-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --bg:#F3FBF8; --card:#FFFFFF; --ink:#0B3D30; --sub:#2F5E51; --faint:#6E8D84; --time:#5F8A7D;
+  --mint:#C8F0E0; --mint-soft:#EAF7F2; --mint-line:#CDE6DC; --mint-btw:#DDF1E9; --unit:#F6FAF8; --ring:#E3EFEA;
+  --green:#13866A; --green-dark:#0E6A53; --rose:#FF8FA8; --rose-soft:#FFEFF3; --rose-ink:#3D0716; --rose-text:#B8244A;
+  --serif:"Gowun Batang",serif; --sans:"Noto Sans KR",-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0E1626; --paper:#172238; --ink:#F2F4F8; --muted:#A7B2C7; --line:#263452;
-  --navy:#0A111E; --accent:#F2A93B; --accent-soft:#2E2412;
-  --calc:#7FAEF5; --calc-soft:#16294A; --con:#7FE0B2; --con-soft:#123327; --track:#22304C; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#0E1626; --paper:#172238; --ink:#F2F4F8; --muted:#A7B2C7; --line:#263452;
-  --navy:#0A111E; --accent:#F2A93B; --accent-soft:#2E2412;
-  --calc:#7FAEF5; --calc-soft:#16294A; --con:#7FE0B2; --con-soft:#123327; --track:#22304C; color-scheme:dark}
-
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.65;word-break:keep-all}
-.wrap{max-width:680px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
-h1,h2,h3{text-wrap:balance;line-height:1.3;margin:0}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;word-break:keep-all}
+a{color:var(--green)}
+h1,h2,b{margin:0}
+h1,h2{font-family:var(--serif);font-weight:700;letter-spacing:-.02em;text-wrap:balance}
 p{margin:0}
+.page{max-width:480px;margin:0 auto;display:flex;flex-direction:column;gap:10px;padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
 
-/* 머리: 질문 하나 */
-.hero{background:var(--navy);color:#F2F4F8;padding-top:env(safe-area-inset-top,0px)}
-.hero .wrap{padding-block:36px 40px;display:grid;gap:16px}
-.brand{font-size:14px;font-weight:700;letter-spacing:.04em;color:#F2A93B}
-.hero h1{font-size:clamp(28px,7.2vw,40px);font-weight:700}
-.hero h1 em{font-style:normal;color:#F2A93B}
-.hero .sub{color:#C3CBDB}
+/* 머리 */
+header{background:var(--mint);border-radius:0 0 36px 36px;padding:calc(26px + env(safe-area-inset-top,0px)) max(22px,env(safe-area-inset-right,0px)) 30px max(22px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:16px}
+.top{display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:var(--serif);font-weight:700;font-size:17px}
+.tag{font-size:12px;font-weight:700;background:#fff;border-radius:999px;padding:4px 11px}
+h1{margin-top:8px;font-size:clamp(30px,8.6vw,36px);line-height:1.32;letter-spacing:-.03em}
+.lede{color:var(--sub)}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kid{background:#fff;border-radius:24px;padding:16px;display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center}
+.kid .who{font-size:13px;color:var(--sub)}
+.donut{width:92px;height:92px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.donut.c{background:conic-gradient(var(--rose) 0 50%,var(--ring) 50% 100%)}
+.donut.k{background:conic-gradient(var(--green) 0 50%,var(--ring) 50% 100%)}
+.donut div{width:68px;height:68px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.2}
+.donut span{font-size:11px;color:var(--sub)}
+.donut b{font-size:20px}
+.kid .other{font-size:12px;color:var(--sub)}
+.kid .rx{font-size:13px}
+.ask{background:var(--ink);color:#fff;border-radius:22px;padding:16px 18px}
+.ask b{font-family:var(--serif);font-size:19px;display:block}
+.ask div{font-size:14px;color:#CFE8DF}
 
-/* 두 아이 비교 */
-.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
-.kid{background:#172238;border:1px solid #263452;border-radius:16px;padding:14px 14px 16px;display:grid;gap:10px}
-.kid .top{display:flex;justify-content:space-between;align-items:baseline;gap:6px}
-.kid .name{font-size:14px;color:#C3CBDB}
-.kid .total{font-family:var(--mono);font-size:30px;font-weight:600;line-height:1;color:#F2F4F8}
-.kid .total small{font-size:14px;color:#A7B2C7;margin-left:2px}
-.bar{display:grid;gap:4px}
-.bar .lb{display:flex;justify-content:space-between;font-size:12px;color:#A7B2C7}
-.bar .lb b{font-family:var(--mono);font-weight:600;color:#F2F4F8}
-.bar .t{height:8px;border-radius:99px;background:#263452;overflow:hidden}
-.bar .f{height:100%;border-radius:99px}
-.f.c{background:#7FAEF5}.f.k{background:#7FE0B2}
-.kid .rx{font-size:13px;color:#F2F4F8;border-top:1px dashed #33436A;padding-top:9px}
-.kid .rx span{color:#A7B2C7}
-.ask{background:#F2A93B;color:#1A1205;border-radius:14px;padding:14px 16px;font-weight:700;font-size:17px;line-height:1.45}
-.ask small{display:block;font-weight:500;font-size:14px;margin-top:4px;color:#3A2C00}
+/* 카드 */
+section{background:var(--card);border-radius:30px;margin:0 12px;padding:28px 18px;display:flex;flex-direction:column;gap:12px}
+.eyebrow{font-size:12px;font-weight:700;color:var(--green)}
+.head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+h2{font-size:24px;line-height:1.35}
+.note{font-size:13px;color:var(--sub)}
+.badge{font-size:12px;font-weight:700;background:var(--rose);color:var(--rose-ink);border-radius:999px;padding:3px 10px}
 
-main .wrap{display:grid;gap:48px;padding-block:40px 40px}
-section{display:grid;gap:16px}
-.eyebrow{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.06em}
-h2{font-size:24px}
-.lead{color:var(--muted)}
+.parts{display:flex;flex-direction:column;gap:8px}
+.part{display:flex;gap:12px;align-items:center;border-radius:18px;padding:14px}
+.part::before{content:"";width:10px;height:36px;border-radius:99px;flex-shrink:0}
+.part.reg{background:var(--mint-soft)}.part.reg::before{background:var(--green)}
+.part.self{background:var(--rose-soft)}.part.self::before{background:var(--rose)}
+.part div div{font-size:13px;color:var(--sub)}
 
-/* 하루 흐름 */
-.day{list-style:none;margin:0;padding:0;display:grid;gap:0;background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden}
-.day li{display:grid;grid-template-columns:62px 1fr;gap:12px;padding:14px 16px;border-top:1px solid var(--line)}
-.day li:first-child{border-top:0}
-.day .tm{font-family:var(--mono);font-weight:600;color:var(--accent);font-size:15px;padding-top:1px}
-.day b{display:block}
-.day p{color:var(--muted);font-size:14px}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:14px}
-.chip b{font-family:var(--mono);color:var(--accent)}
+.day{list-style:none;margin:0;padding:0 0 0 8px;border-left:2px dotted #A9D8C7;display:flex;flex-direction:column}
+.day li{display:flex;gap:12px;padding:8px 0}
+.day .tm{color:var(--time);font-weight:700;width:44px;font-size:14px;flex-shrink:0}
+.day li div div{font-size:13px;color:var(--sub)}
+.k-self{color:var(--rose-text)}.k-reg{color:var(--green)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{background:var(--mint-soft);border-radius:999px;padding:5px 12px;font-size:13px}
 
-/* 문자 예시 */
-.phone{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:16px;display:grid;gap:10px;max-width:420px}
-.phone .from{font-size:12px;color:var(--muted);text-align:center}
-.msg{background:var(--bg);border-radius:16px 16px 16px 4px;padding:10px 13px;font-size:15px;line-height:1.5;justify-self:start;max-width:92%}
-.msg .when{display:block;font-size:12px;color:var(--muted);margin-bottom:2px}
-.note{font-size:14px;color:var(--muted)}
-.note b{color:var(--ink)}
+.msg{background:var(--mint-soft);border-radius:18px 18px 18px 4px;padding:10px 14px;font-size:14px;align-self:flex-start}
+.msg small{display:block;font-size:11px;color:var(--faint)}
 
-/* 상담에서만 */
-.locked{display:grid;gap:10px}
-.lk{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:center;background:var(--paper);border:1px dashed var(--line);border-radius:14px;padding:14px 16px}
-.lk svg{width:22px;height:22px;justify-self:center;color:var(--accent)}
-.lk b{display:block}
-.lk span{font-size:14px;color:var(--muted)}
-
-/* 상담 순서 */
-.steps{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:s}
-.steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
-.steps li::before{content:counter(s);width:30px;height:30px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;display:grid;place-items:center;font-family:var(--mono)}
-.steps b{display:block}
-.steps span{font-size:14px;color:var(--muted)}
-.steps .dur{font-family:var(--mono);font-size:14px;color:var(--ink);white-space:nowrap}
-
-/* 버튼 */
-.cta{position:fixed;left:0;right:0;bottom:0;background:linear-gradient(to top,var(--bg) 75%,transparent);padding-top:18px;padding-bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:5}
-.cta .wrap{display:grid;gap:8px}
-.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:54px;border-radius:14px;font-weight:700;font-size:17px;text-decoration:none;text-align:center;padding:12px 16px}
-.btn.main{background:var(--accent);color:var(--on-accent)}
-.btn.sub{background:var(--paper);color:var(--ink);border:1px solid var(--line);font-size:15px;min-height:46px;font-weight:500}
-.btn:focus-visible{outline:3px solid var(--calc);outline-offset:2px}
-
-.end{background:var(--navy);color:#F2F4F8;margin-top:8px}
-.end .wrap{padding-block:36px 40px;display:grid;gap:14px}
-.end h2{font-size:24px}
-.end p{color:#C3CBDB}
-.end .small{font-size:13px;color:#A7B2C7}
-.endlist{margin:0;padding:14px 16px 14px 34px;background:#172238;border:1px solid #263452;border-radius:14px;color:#F2F4F8;font-size:15px;display:grid;gap:4px}
-.btn.big{min-height:60px;font-size:18px;background:#F2A93B;color:#1A1205}
-.cta{transition:opacity .2s,transform .2s}
-.cta.off{opacity:0;transform:translateY(100%);pointer-events:none}
-footer{padding-block:20px 28px;color:var(--muted);font-size:14px}
-footer .wrap{display:grid;gap:4px}
-footer a{color:var(--muted)}
-footer .num{color:var(--ink)}
-
-@media (max-width:360px){.pair{grid-template-columns:1fr}}
-
-/* 하루 흐름 예시 표시 */
-.daybox{border:2px dashed var(--accent);border-radius:18px;padding:10px;display:grid;gap:10px}
-.daytag{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);padding:2px 4px 0}
-.badge{background:var(--accent);color:var(--on-accent);font-weight:700;font-size:12px;border-radius:6px;padding:2px 8px;letter-spacing:.04em}
-.daybox .day .tm{color:var(--muted)}
-/* 수업 구성 */
-.compose{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:stretch}
-.part{border-radius:14px;padding:12px 14px;display:grid;gap:2px;align-content:start}
-.part .k{font-size:12px;font-weight:700;letter-spacing:.04em}
-.part b{font-size:16px}
-.part span:last-child{font-size:13px;color:var(--muted);line-height:1.45}
-.part.reg{background:var(--calc-soft)} .part.reg .k{color:var(--calc)}
-.part.self{background:var(--con-soft)} .part.self .k{color:var(--con)}
-.plus{display:grid;place-items:center;font:600 22px var(--mono);color:var(--muted)}
-.pill{display:inline-block;font-size:12px;font-weight:700;border-radius:6px;padding:1px 7px;margin-right:6px;vertical-align:1px}
-.pill.reg{background:var(--calc-soft);color:var(--calc)}
-.pill.self{background:var(--con-soft);color:var(--con)}
-@media (max-width:400px){.compose{grid-template-columns:1fr}.plus{font-size:18px;line-height:1}}
 /* 반 진도 */
-:root{--pnow:#1F3A64;--pnow-ink:#FFFFFF;--plater:#E4931F;--plater-ink:#1A1205;--pbtw:#DCE4F1;--punit:#EEF0F4}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pnow:#7FAEF5;--pnow-ink:#0A111E;--plater:#F2A93B;--plater-ink:#1A1205;--pbtw:#22304C;--punit:#1D2942}}
-:root[data-theme="dark"]{--pnow:#7FAEF5;--pnow-ink:#0A111E;--plater:#F2A93B;--plater-ink:#1A1205;--pbtw:#22304C;--punit:#1D2942}
-.cls-pick{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
-.cls-pick button{appearance:none;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:10px;padding:10px 0;font:700 14px var(--sans);cursor:pointer}
-.cls-pick button[aria-pressed="true"]{background:var(--pnow);border-color:var(--pnow);color:var(--pnow-ink)}
-.cls-pick button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.prog{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;gap:10px}
-.prog .ph{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
-.prog .ph b{font-size:17px}
-.prog .ph span{font-size:13px;color:var(--muted)}
-.plegend{display:flex;gap:14px;font-size:13px;color:var(--muted)}
-.plegend i{display:inline-block;width:13px;height:13px;border-radius:4px;vertical-align:-2px;margin-right:5px}
-.plegend i.n{background:var(--pnow)}.plegend i.l{background:var(--plater)}
-.pu{list-style:none;margin:0;padding:0;display:grid;gap:4px}
-.pu li{background:var(--punit);border-radius:8px;padding:8px 12px;font-size:15px;color:var(--muted);display:flex;justify-content:space-between;gap:8px;align-items:baseline}
-.pu li .tag{font-size:12px;font-weight:700;white-space:nowrap}
-.pu li.btw{background:var(--pbtw);color:var(--ink)}
-.pu li.now{background:var(--pnow);color:var(--pnow-ink);font-weight:700}
-.pu li.later{background:var(--plater);color:var(--plater-ink);font-weight:700}
-.pfoot{font-size:13px;color:var(--muted)}
+.pick{display:flex;flex-wrap:wrap;gap:6px}
+.pick button{appearance:none;border:1px solid var(--mint-line);background:#fff;color:var(--ink);border-radius:999px;padding:8px 14px;font:700 13px var(--sans);cursor:pointer}
+.pick button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:#fff}
+.pick button:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+.units{display:flex;flex-direction:column;gap:4px}
+.units .cap{display:flex;justify-content:space-between;padding:4px 4px 6px}
+.units .cap span{font-size:12px;color:var(--sub)}
+.u{background:var(--unit);border-radius:14px;padding:8px 14px;font-size:14px;color:var(--faint);display:flex;justify-content:space-between;gap:8px}
+.u.btw{background:var(--mint-btw);color:var(--ink)}
+.u.now{background:var(--green);color:#fff;font-weight:700;padding:10px 14px}
+.u.later{background:var(--rose);color:var(--rose-ink);font-weight:700;padding:10px 14px}
+.u .t{font-size:12px;white-space:nowrap}
+
+.lk{padding:12px 14px;background:var(--unit);border-radius:16px}
+.lk b{display:block}
+.lk div{font-size:13px;color:var(--sub)}
+
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;counter-reset:s}
+.steps li{display:flex;gap:12px;align-items:center;counter-increment:s}
+.steps li::before{content:counter(s);width:30px;height:30px;border-radius:50%;background:var(--mint);font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.steps li > div{flex-grow:1}
+.steps li > div div{font-size:13px;color:var(--sub)}
+.steps .dur{font-size:13px;font-weight:700}
+
+/* 신청 버튼 */
+.btn{display:flex;align-items:center;justify-content:center;min-height:58px;border-radius:999px;background:var(--ink);color:#fff;font-weight:700;font-size:17px;text-decoration:none}
+.btn:hover{background:var(--green-dark);color:#fff}
+.btn:focus-visible{outline:3px solid var(--green);outline-offset:3px}
+footer{padding:14px 22px 0;display:flex;flex-direction:column;gap:10px}
+footer p{text-align:center;font-size:12px;color:var(--sub)}
+.cta{position:fixed;left:0;right:0;bottom:0;z-index:5;padding:18px 16px max(16px,env(safe-area-inset-bottom,0px));background:linear-gradient(to top,var(--bg) 70%,rgba(243,251,248,0));transition:opacity .2s,transform .2s}
+.cta .btn{max-width:448px;margin:0 auto}
+.cta.off{opacity:0;transform:translateY(100%);pointer-events:none}
+@media (max-width:340px){.pair{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+<div class="page">
 
-<header class="hero">
-  <div class="wrap">
-    <div class="brand">공부의 신 수학</div>
-    <h1>같은 수학 70점,<br><em>처방도 같을까요?</em></h1>
-    <p class="sub">점수는 같아도 빈 곳은 다릅니다. 두 학생의 점수를 나눠 보면 이렇습니다.</p>
-
+  <header>
+    <div class="top"><span class="logo">공부의 신 수학</span><span class="tag">입학 안내</span></div>
+    <h1>같은 수학 70점,<br>처방도 같을까요?</h1>
+    <p class="lede">점수는 같아도 빈 곳은 다릅니다.</p>
     <div class="pair" aria-label="같은 70점 두 학생 비교 예시">
       <div class="kid">
-        <div class="top"><span class="name">A 학생</span><span class="total">70<small>점</small></span></div>
-        <div class="bar"><div class="lb">계산<b>50</b></div><div class="t"><div class="f c" style="width:50%"></div></div></div>
-        <div class="bar"><div class="lb">개념<b>90</b></div><div class="t"><div class="f k" style="width:90%"></div></div></div>
-        <div class="rx"><span>필요한 것</span><br>계산 정확도 훈련</div>
+        <span class="who">A 학생 · 70점</span>
+        <div class="donut c"><div><span>계산</span><b>50</b></div></div>
+        <span class="other">개념 90</span>
+        <b class="rx">계산 정확도 훈련</b>
       </div>
       <div class="kid">
-        <div class="top"><span class="name">B 학생</span><span class="total">70<small>점</small></span></div>
-        <div class="bar"><div class="lb">계산<b>90</b></div><div class="t"><div class="f c" style="width:90%"></div></div></div>
-        <div class="bar"><div class="lb">개념<b>50</b></div><div class="t"><div class="f k" style="width:50%"></div></div></div>
-        <div class="rx"><span>필요한 것</span><br>앞 단원 개념 다시 잡기</div>
+        <span class="who">B 학생 · 70점</span>
+        <div class="donut k"><div><span>개념</span><b>50</b></div></div>
+        <span class="other">계산 90</span>
+        <b class="rx">앞 단원 개념 다시</b>
       </div>
     </div>
+    <div class="ask"><b>우리 아이는 어느 쪽일까요?</b><div>입학테스트 40분이면 계산과 개념을 따로 보여 드립니다.</div></div>
+  </header>
 
-    <div class="ask">우리 아이는 어느 쪽일까요?
-      <small>입학테스트 40분이면 계산과 개념을 따로 점수로 보여 드립니다.</small></div>
-  </div>
-</header>
-
-<main><div class="wrap">
+  <section aria-labelledby="h-parts">
+    <div class="eyebrow">수업 구성</div>
+    <h2 id="h-parts">모든 반은 두 수업으로 갑니다</h2>
+    <div class="parts">
+      <div class="part reg"><div><b>정규 수업</b><div>선생님과 교재로 진도를 나갑니다</div></div></div>
+      <div class="part self"><div><b>자율 수업 · TEST + 오답 학습</b><div>배운 것을 확인하고 틀린 문제를 고칩니다</div></div></div>
+    </div>
+  </section>
 
   <section aria-labelledby="h-day">
-    <div class="eyebrow">하루 흐름 예시</div>
+    <div class="head"><span class="eyebrow">하루 흐름</span><span class="badge">예시</span></div>
     <h2 id="h-day">이렇게 하루를 보냅니다</h2>
-    <p class="lead">모든 반의 수업은 두 부분으로 이루어집니다.</p>
-    <div class="compose" aria-label="수업 구성">
-      <div class="part reg"><span class="k">정규 수업</span><b>선생님과 교재</b><span>진도를 나가는 수업</span></div>
-      <div class="plus" aria-hidden="true">+</div>
-      <div class="part self"><span class="k">자율 수업</span><b>TEST + 오답 학습</b><span>배운 것을 시험으로 확인하고 틀린 문제를 고침</span></div>
-    </div>
-    <p class="lead">아래는 이 구성으로 진행하는 한 반의 하루 예시입니다. <b style="color:var(--ink)">시각과 순서는 반과 요일마다 다르고</b>, 우리 아이 시간표는 상담에서 정합니다.</p>
-    <div class="daybox">
-    <div class="daytag"><span class="badge">예시</span>어느 반의 하루 · 실제 시각과 다를 수 있습니다</div>
+    <p class="note">한 반의 하루 예시입니다. 시각과 순서는 반·요일마다 다르고, 우리 아이 시간표는 상담에서 정합니다.</p>
     <ol class="day">
-      <li><span class="tm">16:28</span><div><b>도착 — 입구 QR</b><p>휴대폰으로 찍으면 바로 부모님께 도착 문자가 갑니다.</p></div></li>
-      <li><span class="tm">16:30</span><div><b><span class="pill self">자율 수업</span>TEST + 오답 학습</b><p>학원에서만 보는 정시 TEST를 치르고, 틀린 문제는 오답 학습으로 고칩니다. 90%에 못 미치면 다음 수업일에 다시 봅니다.</p></div></li>
-      <li><span class="tm">18:00</span><div><b><span class="pill reg">정규 수업</span>선생님과 교재</b><p>이 시각이 숙제 1차 마감입니다.</p></div></li>
-      <li><span class="tm">20:00</span><div><b>숙제가 95% 미만이면 남아서 보충</b><p>그날 안에 고쳐서 다시 올립니다.</p></div></li>
-      <li><span class="tm">20:35</span><div><b>귀가 — 앱에서 [귀가하기]</b><p>부모님께 귀가 문자가 갑니다.</p></div></li>
+      <li><span class="tm">16:28</span><div><b>도착 · 입구 QR</b><div>부모님께 도착 문자</div></div></li>
+      <li><span class="tm">16:30</span><div><b class="k-self">자율 수업</b> <b>TEST + 오답 학습</b><div>90% 미만이면 다음 수업일 재시험</div></div></li>
+      <li><span class="tm">18:00</span><div><b class="k-reg">정규 수업</b> <b>선생님과 교재</b><div>숙제 1차 마감</div></div></li>
+      <li><span class="tm">20:00</span><div><b>숙제 95% 미만이면 보충</b><div>그날 안에 고쳐서 다시 올림</div></div></li>
+      <li><span class="tm">20:35</span><div><b>귀가</b><div>부모님께 귀가 문자</div></div></li>
     </ol>
-    </div>
-    <div class="chips" aria-label="기준">
-      <span class="chip">숙제 목표 <b>95%</b></span>
-      <span class="chip">정시 시험 기준 <b>90%</b></span>
-      <span class="chip">보충은 <b>그날</b> 끝냄</span>
-    </div>
+    <div class="chips" aria-label="기준"><span>숙제 목표 <b>95%</b></span><span>TEST 기준 <b>90%</b></span><span>보충은 <b>그날</b></span></div>
   </section>
 
   <section aria-labelledby="h-sms">
     <div class="eyebrow">부모님 문자</div>
     <h2 id="h-sms">필요할 때만, 하루 2~3통</h2>
-    <div class="phone" role="img" aria-label="학부모가 받는 문자 예시 3개">
-      <div class="from">공부의 신 수학</div>
-      <div class="msg"><span class="when">16:28</span>홍길동 학생이 16:28에 도착했습니다.</div>
-      <div class="msg"><span class="when">18:05</span>홍길동 숙제 1차 70% · 오늘 수업 후 보충(마감 21:00)</div>
-      <div class="msg"><span class="when">21:02</span>홍길동 학생이 마감까지 애썼습니다! 숙제 70→88% · 21:02 귀가</div>
-    </div>
-    <p class="note">밤 <b class="num">22:00</b>~아침 <b class="num">08:00</b>에는 문자를 보내지 않습니다. 문구는 예시입니다.</p>
+    <div class="msg"><small>16:28</small>홍길동 학생이 16:28에 도착했습니다.</div>
+    <div class="msg"><small>18:05</small>홍길동 숙제 1차 70% · 오늘 수업 후 보충(마감 21:00)</div>
+    <div class="msg"><small>21:02</small>홍길동 학생이 마감까지 애썼습니다! 숙제 70→88% · 21:02 귀가</div>
+    <p class="note">밤 22:00~아침 08:00에는 보내지 않습니다. 문구는 예시입니다.</p>
   </section>
 
   <section aria-labelledby="h-prog" id="progSec">
-    <div class="eyebrow">반 진도</div>
-    <h2 id="h-prog">지금 반마다 어디를 나가고 있나요</h2>
-    <p class="lead">반을 누르면 이번 주 진도와 3주 뒤 진도를 볼 수 있습니다. <span class="num" id="pAsof"></span></p>
-    <div class="cls-pick" id="pPick" role="group" aria-label="반 선택"></div>
-    <div class="prog" id="pCard"><p class="pfoot">진도를 불러오는 중입니다…</p></div>
+    <div class="head"><span class="eyebrow">반 진도</span><span class="note" id="pAsof"></span></div>
+    <h2 id="h-prog">지금 반마다 어디를 나가나요</h2>
+    <div class="pick" id="pPick" role="group" aria-label="반 선택"></div>
+    <div class="units" id="pCard"><p class="note">진도를 불러오는 중입니다…</p></div>
   </section>
 
   <section aria-labelledby="h-lock">
     <div class="eyebrow">상담에서 알려 드립니다</div>
-    <h2 id="h-lock">이건 아이를 봐야 답할 수 있어요</h2>
-    <div class="locked">
-      <div class="lk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-        <div><b>계산과 개념, 어디가 비었는지</b><span>입학테스트 점수 두 개와 틀린 문항</span></div></div>
-      <div class="lk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-        <div><b>지금 진도로 들어갈 반</b><span>아이 진도와 반 진도를 단원 단위로 비교</span></div></div>
-      <div class="lk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-        <div><b>요일·시간, 교재와 진도 계획</b><span>아이 일정과 수준에 맞춰 정합니다</span></div></div>
-    </div>
+    <h2 id="h-lock">아이를 봐야 답할 수 있는 것</h2>
+    <div class="lk"><b>계산과 개념, 어디가 비었는지</b><div>입학테스트 점수 두 개와 틀린 문항</div></div>
+    <div class="lk"><b>지금 진도로 들어갈 반</b><div>아이 진도와 반 진도를 단원 단위로 비교</div></div>
+    <div class="lk"><b>요일·시간, 교재와 진도 계획</b><div>아이 일정과 수준에 맞춰 정합니다</div></div>
   </section>
 
   <section aria-labelledby="h-step">
     <div class="eyebrow">입학 상담 순서</div>
     <h2 id="h-step">부담 없이, 전화부터</h2>
     <ol class="steps">
-      <li><div><b>상담 신청</b><span>연락처와 아이 정보를 남깁니다</span></div><span class="dur">1분</span></li>
-      <li><div><b>원장 전화 상담</b><span>남겨 주신 번호로 원장이 전화드립니다</span></div><span class="dur">20분</span></li>
-      <li><div><b>학원 방문 입학테스트</b><span>끝나면 결과가 바로 문자로 갑니다</span></div><span class="dur">40분</span></li>
+      <li><div><b>상담 신청</b><div>연락처와 아이 정보를 남깁니다</div></div><span class="dur">1분</span></li>
+      <li><div><b>원장 전화 상담</b><div>남겨 주신 번호로 전화드립니다</div></div><span class="dur">20분</span></li>
+      <li><div><b>학원 방문 입학테스트</b><div>끝나면 결과가 바로 문자로</div></div><span class="dur">40분</span></li>
     </ol>
   </section>
 
-</div></main>
+  <footer id="end">
+    <a class="btn goConsult" href="../consult/?from=guide">정보 남기고 상담 신청하기</a>
+    <p>1분이면 끝납니다 · 등록하지 않으면 6개월 뒤 정보 삭제</p>
+  </footer>
+</div>
 
-<div class="cta" id="cta"><div class="wrap">
-  <a class="btn main goConsult" href="../consult/?from=guide">입학 상담 신청하기</a>
-</div></div>
-
-<section class="end" id="end" aria-labelledby="h-end"><div class="wrap">
-  <h2 id="h-end">자세한 상담이 필요하신가요?</h2>
-  <p>아이 정보를 남겨 주시면 원장이 직접 전화드립니다.</p>
-  <ul class="endlist">
-    <li>학부모 휴대폰 번호 · 자녀 이름 · 학교 · 학년</li>
-    <li>궁금한 점 (선택)</li>
-  </ul>
-  <a class="btn main big goConsult" href="../consult/?from=guide">정보 남기고 상담 신청하기</a>
-  <p class="small">1분이면 끝납니다. 입력한 정보는 상담 안내에만 쓰고, 등록하지 않으면 6개월 뒤 삭제합니다.</p>
-</div></section>
-
-<footer><div class="wrap">
-  <b style="color:var(--ink)">공부의 신 수학</b>
-</div></footer>
+<div class="cta" id="cta"><a class="btn goConsult" href="../consult/?from=guide">입학 상담 신청하기</a></div>
 
 <script>
 // 이 페이지에 붙은 꼬리표(?from=door 등)를 상담 신청 버튼으로 넘긴다. 없으면 guide.
@@ -295,7 +210,7 @@ footer .num{color:var(--ink)}
     var f=new URLSearchParams(location.search).get('from');
     if(f && /^[a-z0-9_-]{1,20}$/i.test(f)) document.querySelectorAll('.goConsult').forEach(function(a){a.href='../consult/?from='+encodeURIComponent(f.toLowerCase());});
   }catch(e){}
-  // 맨 아래 상담 예약 칸이 보이면 아래 고정 버튼은 숨긴다(같은 버튼 두 개 방지)
+  // 맨 아래 신청 버튼이 보이면 아래 고정 버튼은 숨긴다(같은 버튼 두 개 방지)
   try{
     var cta=document.getElementById('cta'),end=document.getElementById('end');
     new IntersectionObserver(function(es){cta.classList.toggle('off',es[0].isIntersecting);},{threshold:0.15}).observe(end);
@@ -312,14 +227,13 @@ footer .num{color:var(--ink)}
   function render(){
     pick.innerHTML=DATA.classes.map(function(c){return '<button type="button" aria-pressed="'+(c.name===CLS)+'" data-c="'+esc(c.name)+'">'+esc(c.name)+'</button>'}).join('');
     var c=DATA.classes.filter(function(x){return x.name===CLS})[0];
-    if(!c||!c.units.length){card.innerHTML='<p class="pfoot">'+esc(CLS)+' 진도는 곧 올라옵니다.</p>';return}
+    if(!c||!c.units.length){card.innerHTML='<p class="note">'+esc(CLS)+' 진도는 곧 올라옵니다.</p>';return}
     var keys=c.units.map(function(u){return u.key}),ni=keys.indexOf(c.now),li=keys.indexOf(c.later);
-    var h='<div class="ph"><b>'+esc(c.name)+'</b><span>'+esc(c.sem)+' 진도</span></div>'+
-      '<div class="plegend"><span><i class="n"></i>이번 주</span><span><i class="l"></i>3주 뒤</span></div><ol class="pu">'+
+    var h='<div class="cap"><b>'+esc(c.name)+'</b><span>'+esc(c.sem)+' 진도</span></div>'+
       c.units.map(function(u,i){var k=i===ni?'now':i===li?'later':(ni>=0&&li>ni&&i>ni&&i<li)?'btw':'';
-        var t=i===ni?'<span class="tag">이번 주</span>':i===li?'<span class="tag">3주 뒤</span>':'';
-        return '<li class="'+k+'">'+esc(u.name)+t+'</li>'}).join('')+'</ol>';
-    if(c.laterSem&&c.laterSem!==c.sem) h+='<p class="pfoot">3주 뒤에는 '+esc(c.laterSem)+' 진도입니다.</p>';
+        var t=i===ni?'<span class="t">이번 주</span>':i===li?'<span class="t">3주 뒤</span>':'';
+        return '<div class="u '+k+'"><span>'+esc(u.name)+'</span>'+t+'</div>'}).join('');
+    if(c.laterSem&&c.laterSem!==c.sem) h+='<p class="note">3주 뒤에는 '+esc(c.laterSem)+' 진도입니다.</p>';
     card.innerHTML=h;
   }
   pick.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;CLS=b.getAttribute('data-c');try{localStorage.setItem('introCls',CLS)}catch(e){}render()});
@@ -327,7 +241,7 @@ footer .num{color:var(--ink)}
     if(!d||!d.ok||!d.classes||!d.classes.length){sec.hidden=true;return}
     DATA=d;CLS=d.classes[0].name;
     try{var v=localStorage.getItem('introCls');if(d.classes.some(function(c){return c.name===v}))CLS=v}catch(e){}
-    document.getElementById('pAsof').textContent=d.todayLabel+' 기준 실제 진도입니다.';
+    document.getElementById('pAsof').textContent=d.todayLabel+' 기준';
     render();
   }).catch(function(){sec.hidden=true});
 })();
