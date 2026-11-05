@@ -81,7 +81,8 @@
   window.addEventListener('online', function () { if (!frame) open(); });
 
   // ── GAS 화면과의 메시지 — 구글 화면(*.googleusercontent.com)에서 온 것만, 정해진 type만 받는다 ──
-  function fromGas(origin) { return /^https:\/\/[a-z0-9.-]+\.googleusercontent\.com$/.test(String(origin || '')); }
+  var APP_ORIGIN = (String(C.GAS).match(/^https?:\/\/[^\/]+/) || [''])[0];   // [새 앱] config 주소의 출처 — 새 앱(Vercel) 화면 신호도 받는다
+  function fromGas(origin) { origin = String(origin || ''); return origin === APP_ORIGIN || /^https:\/\/[a-z0-9.-]+\.googleusercontent\.com$/.test(origin); }
   window.addEventListener('message', function (e) {
     if (!fromGas(e.origin)) return;
     var d = e.data;

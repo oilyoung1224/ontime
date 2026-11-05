@@ -1,7 +1,7 @@
 /* ONTIME 껍데기 앱 — 주소·화면 경로 표. 값은 이 파일 1곳에만 둔다.
  * 도메인을 붙이면 BASE만 바꾼다. 여기에는 공개해도 되는 값(이미 학생들이 쓰는 웹앱 주소)만 넣는다. */
 window.ONTIME = {
-  GAS: 'https://script.google.com/macros/s/AKfycbxRFVTBM2HTfMuKRmsJRAkR6pDUHI5vaIfST3lEO9I0s1jfruxkMSeUHdkDmyGmJPNKig/exec',
+  GAS: 'https://ontime-supabase.vercel.app/',
   BASE: 'https://oilyoung1224.github.io/ontime',
   // 폴더 → GAS ?view= 값('' = 학생 앱, null = GAS를 열지 않음)
   VIEW: { student: '', report: 'report', admin: 'admin', board: 'board', gate: 'gate', notice: 'notice', guide: null },
