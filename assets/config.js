@@ -14,6 +14,11 @@ window.ONTIME = {
     gate:    { name: '학원 노트북',  color: '#17223A', install: false },
     notice:  { name: '공부의 신 공지', color: '#111111', install: false }   // [v42] 학부모 공지 페이지(?k=링크키)
   },
+  // [007] 학부모 리포트 새 기록 알림(웹 푸시) — 공개키(공개해도 되는 값) · 구독을 받는 새 앱 주소. 비밀키는 새 앱 환경변수에만
+  PUSH: {
+    key: 'BHsVt_ld3zBSMjQ15pIxJwVIqMfQnO_HYXu8K6kmquVw4OqUPRsxv8MojCTfNJ8KNQ4NJnntfwN7SAofeV1RU3Y',
+    api: 'https://ontime-supabase.vercel.app/api/push/'
+  },
   // GAS 화면이 이동을 부탁할 수 있는 경로(ontime:navigate)
   PATHS: ['/student/', '/report/', '/admin/', '/board/', '/gate/', '/guide/']
 };

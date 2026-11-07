@@ -8,7 +8,7 @@
   'use strict';
   var C = window.ONTIME, app = document.body.getAttribute('data-app'), A = C.APP[app] || { name: 'ONTIME', color: '#0E1626' };
   var KEY = 'ontime.' + app + '.session';
-  var TYPES = { 'ontime:ready': 1, 'ontime:save': 1, 'ontime:clear': 1, 'ontime:navigate': 1 };
+  var TYPES = { 'ontime:ready': 1, 'ontime:save': 1, 'ontime:clear': 1, 'ontime:navigate': 1, 'ontime:seen': 1 };   // [007] ontime:seen = 학부모가 [오늘] 탭을 봤다(아이콘 숫자 지우기)
   var READY_MS = 15000;
 
   function store(op, v) {
@@ -93,8 +93,12 @@
       try { e.source.postMessage({ type: 'ontime:session', token: store('get') }, e.origin); } catch (x) {}
     } else if (d.type === 'ontime:save') {
       if (typeof d.token === 'string' && d.token && d.token.length < 4000) store('set', d.token);
+      try { window.dispatchEvent(new Event('ontime:pushcheck')); } catch (x) {}          // [007] 로그인 직후 — 알림 받기 띠(push.js)가 다시 본다
     } else if (d.type === 'ontime:clear') {
       store('del');
+    } else if (d.type === 'ontime:seen') {                                           // [007] 아이콘 숫자 지우기 · 그 학생 알림 닫기
+      try { if (navigator.clearAppBadge) navigator.clearAppBadge().catch(function () {}); } catch (x) {}
+      try { if (navigator.serviceWorker && navigator.serviceWorker.controller) navigator.serviceWorker.controller.postMessage({ type: 'ontime:seen', sid: String(d.sid || '').slice(0, 40) }); } catch (x) {}
     } else if (d.type === 'ontime:navigate') {
       var p = String(d.path || '');
       if (C.PATHS.indexOf(p) >= 0) location.href = C.BASE + p;
