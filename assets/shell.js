@@ -8,7 +8,7 @@
   'use strict';
   var C = window.ONTIME, app = document.body.getAttribute('data-app'), A = C.APP[app] || { name: 'ONTIME', color: '#0E1626' };
   var KEY = 'ontime.' + app + '.session';
-  var TYPES = { 'ontime:ready': 1, 'ontime:save': 1, 'ontime:clear': 1, 'ontime:navigate': 1, 'ontime:seen': 1 };   // [007] ontime:seen = 학부모가 [오늘] 탭을 봤다(아이콘 숫자 지우기)
+  var TYPES = { 'ontime:ready': 1, 'ontime:save': 1, 'ontime:clear': 1, 'ontime:navigate': 1, 'ontime:seen': 1, 'ontime:push': 1 };   // [007] ontime:seen = 학부모가 [오늘] 탭을 봤다(아이콘 숫자 지우기) · ontime:push = 리포트 화면 [알림 켜짐/꺼짐] 버튼(push.js)
   var READY_MS = 15000;
 
   function store(op, v) {
@@ -82,6 +82,7 @@
 
   // ── GAS 화면과의 메시지 — 구글 화면(*.googleusercontent.com)에서 온 것만, 정해진 type만 받는다 ──
   var APP_ORIGIN = (String(C.GAS).match(/^https?:\/\/[^\/]+/) || [''])[0];   // [새 앱] config 주소의 출처 — 새 앱(Vercel) 화면 신호도 받는다
+  var pushReply = null, pushWatched = false;
   function fromGas(origin) { origin = String(origin || ''); return origin === APP_ORIGIN || /^https:\/\/[a-z0-9.-]+\.googleusercontent\.com$/.test(origin); }
   window.addEventListener('message', function (e) {
     if (!fromGas(e.origin)) return;
@@ -99,6 +100,14 @@
     } else if (d.type === 'ontime:seen') {                                           // [007] 아이콘 숫자 지우기 · 그 학생 알림 닫기
       try { if (navigator.clearAppBadge) navigator.clearAppBadge().catch(function () {}); } catch (x) {}
       try { if (navigator.serviceWorker && navigator.serviceWorker.controller) navigator.serviceWorker.controller.postMessage({ type: 'ontime:seen', sid: String(d.sid || '').slice(0, 40) }); } catch (x) {}
+    } else if (d.type === 'ontime:push') {                                           // [007] 알림 켜짐/꺼짐 — 상태를 ontime:pushstate로 돌려준다(설치 앱이 아니면 none = 버튼 숨김)
+      var src = e.source, org = e.origin;
+      var reply = function (st) { try { src.postMessage({ type: 'ontime:pushstate', state: st }, org); } catch (x) {} };
+      var P = window.ONTIME_PUSH, op = d.op === 'on' || d.op === 'off' ? d.op : 'get';
+      if (!P) { reply('none'); return; }
+      pushReply = reply;                                                             // 아래 띠로 켜고 끈 결과도 마지막 화면에 알린다(한 번만 등록)
+      if (!pushWatched) { pushWatched = true; P.watch(function (st) { if (pushReply) pushReply(st); }); }
+      P.run(op).then(reply, function () { reply('error'); });
     } else if (d.type === 'ontime:navigate') {
       var p = String(d.path || '');
       if (C.PATHS.indexOf(p) >= 0) location.href = C.BASE + p;
